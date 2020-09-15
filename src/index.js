@@ -1,8 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+// importing bootstrap(in node modules folder) before index.css  
+// so that our own customizations in css overwrite default ones in bootstrap
 import './index.css';
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
 
 ReactDOM.render(
   <React.StrictMode>
