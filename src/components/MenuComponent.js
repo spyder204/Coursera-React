@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 //import {Media} from 'reactstrap';
 import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+
+import DishDetail from './DishdetailComponent';
+
 class Menu extends Component{ // creating a new component
 
     //defining a constructor
@@ -42,6 +45,8 @@ class Menu extends Component{ // creating a new component
     
     render(){
 
+
+
         const menu = this.props.dishes.map((dish)=>{
             return( 
                 //mt-5 means top margin of 5 units- some bootstrap
@@ -61,6 +66,7 @@ class Menu extends Component{ // creating a new component
                     </Card>
                 </div>
             ) 
+            
             // in a list of items we create in react, each item requires a key attribute to be specified
             //key helps react to recognize these items uniquely when react is rendering them on the screen.
         });
@@ -69,11 +75,10 @@ class Menu extends Component{ // creating a new component
                 <div className='row'>  
                     {menu}          
                 </div>
-                <div className="row">
-                    {this.renderDish(this.state.selectedDish)}
-                </div>
+                
+                <DishDetail dish={this.state.selectedDish}/>
             </div>
-        ); 
+        ); //passing prop above
     }
 }
 
