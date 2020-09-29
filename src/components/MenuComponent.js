@@ -1,49 +1,66 @@
-import React, {Component} from 'react';
+import React from 'react';
 //import {Media} from 'reactstrap';
-import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
-import DishDetail from "./DishdetailComponent";
-import {DISHES} from "../shared/dishes";
-class Menu extends Component{ // creating a new component
+import {Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
 
-    //defining a constructor
-    constructor(props){
-        super(props);
-       // these steps are reqd. always
-    
-        //defining a state for the component
-        //stores properties for the component
-        this.state={
-            dishes:DISHES,
-            selectedDish:null
-          };
 
-    }
+// defining a functional component 
+
+function RenderMenuItem({dish, onClick}) {     // destructuring props
+
+    return(
+        <Card key = {dish.id} onClick = {()=>onClick(dish.id)}>
+        <CardImg width="100%"  object src = {dish.image} alt = {dish.name}/>
+        
+        <CardImgOverlay>
+            <CardTitle heading>{dish.name}</CardTitle>        
+         </CardImgOverlay>
    
+    </Card>
+    );
 
-    //to render details of the selected dish
-    renderDish(dish){
-        if(dish!=null){
-            return(
-                <Card>
-                    <CardImg width="100%"  object src = {dish.image} alt = {dish.name}/>                  
-                    <CardBody>
-                        <CardTitle heading>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>    
-                </Card>
-                
-            );
+} // func component ready
 
-        }
-        else{
-            return (<div></div>);   // returning empty div 
-        }
-    }
+const Menu = (props)=>{        // another way of defining functional components
+
+    const menu = props.dishes.map((dish)=>{
+        return( 
+            //mt-5 means top margin of 5 units- some bootstrap
+            // media class renders each item in the menu
+            // li denotes each is a list item 
+            //ml-5 left margin of 5
+            <div key = {dish.id} className="col-12 col-md-5 m-1">
+            {
+            // using above functional component- down below
+            }
+            <RenderMenuItem dish = {dish} onClick = {props.onClick} />
+            </div>
+        );
+    });
     
+    return(
+        <div className = 'container'>
+            <div className='row'>  
+                {menu}          
+            </div>
+        </div>
+    );
+    
+};
+
+
+
+
+
+
+
+
+
+
+
+/*
+class Menu extends Component{ // creating a new component    
+    //to render details of the selected dish
     render(){
-
-
-
         const menu = this.props.dishes.map((dish)=>{
             return( 
                 //mt-5 means top margin of 5 units- some bootstrap
@@ -79,7 +96,7 @@ class Menu extends Component{ // creating a new component
         ); //passing prop above
     }
 }
-
+*/
 
 export default Menu;
 //import Menu in app.js
