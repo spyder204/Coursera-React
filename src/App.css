@@ -29,5 +29,19 @@ color:#0f0f0f;
 }
 
 .navbar-dark {
-background-color: light;
+background-color: ghostwhite;
+}
+
+.gap-nav {
+    margin:15px;
+}
+
+.btn-social-icon{
+    margin:4px;
+    border-radius: 10px;
+    
+}
+
+.navbar-toggler{
+    background-color: rgb(253, 59, 59);
 }
