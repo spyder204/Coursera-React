@@ -45,3 +45,18 @@ background-color: ghostwhite;
 .navbar-toggler{
     background-color: rgb(253, 59, 59);
 }
+
+.header-nav{
+    background-color: #0f0f0f;
+}
+
+.card-title{
+    font-weight: 700;
+    font-family:  sans-serif;
+}
+.card-subtitle{
+    font-weight: 450;
+    font-size: smaller;
+    font-family: Arial, Helvetica, sans-serif;
+    color:gray;
+}

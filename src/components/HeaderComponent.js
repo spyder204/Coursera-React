@@ -33,7 +33,7 @@ class Header extends Component{
                        //navbar expanded only for screen sizes more than medium to XL.
                    }
                <div className="container">
-                 <NavbarToggler className='navbar-light' onClick = {this.toggleNav} />
+                 <NavbarToggler className='navbar-toggle' onClick = {this.toggleNav} />
      
                  <NavbarBrand classname = 'mr-auto' href="/">
                       <img src = 'assets/images/logo.png' height='30' width='41'/>
@@ -53,7 +53,7 @@ class Header extends Component{
                          </NavLink>
                      </NavItem>
                      <NavItem className = 'gap-nav'>
-                         <NavLink classname = 'nav-link px-12' to='/contact'>
+                         <NavLink classname = 'nav-link px-12' to='/contactus'>
                              <span className="fa fa-address-card fa-lg"></span>
                          </NavLink>
                      </NavItem>
