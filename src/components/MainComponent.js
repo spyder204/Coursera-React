@@ -14,7 +14,7 @@ import Footer from './FooterComponent';
 import Home from './HomeComponent';
 
 import Contact from './ContactComponent';
-
+import About from './AboutComponent'
 
 import {Switch, Route, Redirect} from 'react-router-dom';
 import { unstable_renderSubtreeIntoContainer } from 'react-dom';
@@ -47,13 +47,24 @@ class Main extends Component {
       
     }// we can also do this like done in Menu route.
 
+    const DishWithId = ({match})=>{
+      console.log(parseInt(match.params.dishId, 10));
+      // route will pass 3 props here-match, location, history,. we want match only
+      return(
+        <DishDetail 
+        dish = {this.state.dishes.filter((dish)=>dish.id === parseInt(match.params.dishId, 10))[0]} 
+        
+        comments = {this.state.comments.filter((comment)=>comment.dishId === parseInt(match.params.dishId, 10))}
+        />)
+    }
+
     return (
       <div>
         <Header/>
           <Switch>
             
             <Route path = "/home" component= {Homepage} />
-            <Route exact path = "/menu" component= { ()=><Menu dishes = {this.state.dishes} /> } />
+            <Route exact path = "/menu" component = { ()=><Menu dishes = {this.state.dishes} /> } />
             {
             // exact-- means path should exactly match, nothing ahead /menu
             //component= {Menu}--- wrong approach---- as we would not be able to pass
@@ -63,6 +74,9 @@ class Main extends Component {
 
             <Route exact path = "/contactus" component = {Contact} />
 
+            <Route path = '/menu/:dishId' component={DishWithId}/>
+
+            <Route exact path = "/aboutus" component = { ()=><About leaders = {this.state.leaders}/>} /> 
             <Redirect to = "/home" />
             {
               // if routes don't match, redirected to HomePage
