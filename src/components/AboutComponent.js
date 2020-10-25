@@ -8,7 +8,8 @@ function RenderLeader({leader}){
     return(
         <div className='row leaderMedia'>
             <Media>
-            <Media object src={leader.image} alt="Masterchef Alberto" />
+            <Media object style ={{maxHeight:'200px', marginRight:'20px', borderRadius:'50%', boxShadow:'-5px 5px 5px coral'}} 
+            src={leader.image} alt="Masterchef Alberto" />
             </Media>
             
             <Media body>
