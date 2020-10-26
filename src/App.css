@@ -1,5 +1,7 @@
-margin:0px auto;
-padding:0px auto;
+
+@media(min-width: 700px){
+
+}
 
 .row-content {
 margin:0px auto;
