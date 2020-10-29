@@ -22,9 +22,8 @@ class Header extends Component{
     }   
 
     handleLogin(event) {
-        this.toggleModal(); prompt("je");
+        this.toggleModal(); 
         alert("Username: " + this.username.value + " Password: " + this.password.value + " Remember: " + this.remember.checked);
-        prompt('aya ab?');
         event.preventDefault();
     
     }
@@ -129,7 +128,7 @@ class Header extends Component{
 
                       <FormGroup>
                           <Label htmlFor = 'password'> Password : 
-                            <Input type = 'password' id='password' name='password' innerRef={(input)=>this.password=input}>></Input>
+                            <Input type = 'password' id='password' name='password' innerRef={(input)=>this.password=input}></Input>
                           </Label>
                       </FormGroup>
                       <FormGroup check>
