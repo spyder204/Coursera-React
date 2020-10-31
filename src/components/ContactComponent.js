@@ -6,6 +6,13 @@ import {Control, LocalForm, Errors} from 'react-redux-form'; //manages state
 
 // for forms === we need a class component as we need to store the state of the form in our contact component
 
+// validation
+const required = (val)=>val && val.length ; //this function receives a value and checks > 0 
+const maxLength = (len) => (val)=> !(val) || (val.length <=len);// len of value entered is less than max
+const minLength = (len) => (val)=> (val) && (val.length >= len);// len should be  >= 0
+const isNumber = (val)=>!isNaN(Number(val));
+const validEmail = (val) => /^[A-Z0-9._%=-]+@[A-Z0-9.-]+\.[A-Z]{2,40}$/i.test(val)
+
 class Contact extends React.Component{
     
     //to store state, create a constructor
@@ -85,19 +92,51 @@ class Contact extends React.Component{
                             <Row className="form-group">
                                 <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={10}>
-                                    <Control.text model=".firstName" id="firstName" name="firstName"
+                                    <Control.text model=".firstname" id="firstName" name="firstName"
                                         placeholder="First Name"
                                         className="form-control"
-                                         />
+                                        validators = {{
+                                            required,
+                                            minLength: minLength(3),
+                                            maxLength: maxLength(15)
+
+                                        }}
+                                        />
+                                        < Errors className='text-danger' 
+                                        model='.firstname' 
+                                        show='touched'
+                                        messages={{
+                                            required: 'Required: ',
+                                            minLength:'Must b > 2 chars',
+                                            maxLength:'Must be < 15 chars'
+                                        }}
+                                    
+                                        />
                                 </Col>
                             </Row>
                             <Row className="form-group">
                                 <Label htmlFor="lastName" md={2}>Last Name</Label>
                                 <Col md={10}>
-                                    <Control.text model=".lastName" id="lastName" name="lastName"
+                                    <Control.text model=".lastname" id="lastName" name="lastName"
                                         placeholder="Last Name"
                                         className="form-control"
+                                        validators = {{
+                                            required,
+                                            minLength: minLength(3),
+                                            maxLength:maxLength(15)
+
+                                        }}
                                          />
+                                         < Errors className='text-danger' 
+                                        model='.lastname' 
+                                        show='touched'
+                                        messages={{
+                                            required: 'Required',
+                                            minLength:'Must b > 2 chars',
+                                            maxLength:'Must be < 15 chars'
+                                        }}
+                                    
+                                        />
                                 </Col> 
                             </Row>
                             <Row className="form-group">
@@ -106,7 +145,25 @@ class Contact extends React.Component{
                                     <Control.text model=".phone" id="phone" name="phone"
                                         placeholder="Tel. Number"
                                         className="form-control"
+                                        validators = {{
+                                            required,
+                                            minLength: minLength(3),
+                                            maxLength:maxLength(15),
+                                            isNumber
+
+                                        }}
                                          />
+                                         < Errors className='text-danger' 
+                                        model='.phone' 
+                                        show='touched'
+                                        messages={{
+                                            required: 'Required ',
+                                            minLength:'Must be > 2 digits',
+                                            maxLength:'Must be < 15 digits',
+                                            isNumber:"Not a number"
+                                        }}
+                                    
+                                        />
                                 </Col>
                             </Row>
                             <Row className="form-group">
@@ -114,7 +171,20 @@ class Contact extends React.Component{
                                 <Col md={10}>
                                     <Control.text model=".email" id="email" name="email"
                                         placeholder="Email"
-                                        className="form-control" />
+                                        className="form-control"
+                                        validators = {{
+                                            required,
+                                            validEmail
+                                        }} />
+                                         < Errors className='text-danger' 
+                                        model='.email' 
+                                        show='touched'
+                                        messages={{
+                                            required: 'Required',
+                                            validEmail:"Invalid email address"
+                                        }}
+                                    
+                                        />
                                 </Col>
                             </Row>
                             <Row className="form-group">
