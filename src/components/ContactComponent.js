@@ -117,7 +117,7 @@ class Contact extends React.Component{
                             <Row className="form-group">
                                 <Label htmlFor="lastName" md={2}>Last Name</Label>
                                 <Col md={10}>
-                                    <Control.text model=".lastname" id="lastName" name="lastName"
+                                    <Control.text model=".lastn-fame" id="lastName" name="lastName"
                                         placeholder="Last Name"
                                         className="form-control"
                                         validators = {{

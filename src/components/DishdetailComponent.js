@@ -1,6 +1,7 @@
 import React from 'react';
 import {Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import CommentForm from './CommentForm';
 
     function RenderDishCard({dish}){  // dish = props here . destructured
         if(dish==null)
@@ -44,6 +45,7 @@ import {Link} from 'react-router-dom';
                     <ul className='list-unstyled'>
                         {commentdata} 
                     </ul>
+                    <CommentForm/>
                 </div>
             );
         }
@@ -59,23 +61,24 @@ import {Link} from 'react-router-dom';
          return(
                 <div className='container'>
                     <div className='row'>
-               <Breadcrumb>
-                <BreadcrumbItem>
-                    <Link to='/home'>Home</Link>  
-                </BreadcrumbItem>
-                <BreadcrumbItem>
-                    <Link to='/menu'>Menu</Link>  
-                </BreadcrumbItem>
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link to='/home'>Home</Link>  
+                            </BreadcrumbItem>
+                            <BreadcrumbItem>
+                                <Link to='/menu'>Menu</Link>  
+                            </BreadcrumbItem>
 
-                <BreadcrumbItem active>{props.dish.name}
-                </BreadcrumbItem>
-               </Breadcrumb>
+                            <BreadcrumbItem active>{props.dish.name}
+                            </BreadcrumbItem>
+                        </Breadcrumb>
                
-               <div className='col-12'>
-                   <h3>{props.dish.name}</h3>
-                   <hr/>
-               </div>
-           </div>
+                        <div className='col-12'>
+                            <h3>{props.dish.name}</h3>
+                            <hr/>
+                        </div>
+                    </div>
+                    
                     <div className='row'>
                         <RenderDishCard dish = {props.dish} />   
                         <RenderComments comments = {props.comments} />
