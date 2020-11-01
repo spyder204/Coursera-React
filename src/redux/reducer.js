@@ -1,3 +1,4 @@
+/*
 //main component will obtain the state from the redux store
 import { DISHES } from '../shared/dishes';
 import { PROMOTIONS } from '../shared/promotions';
@@ -10,7 +11,7 @@ export const initialState = {
     comments: COMMENTS,
     leaders : LEADERS,
     promotions: PROMOTIONS
-}
+}// since these states are independenet of each other- we can have separate reducer functions for these and combine them later on
 
 // reducer function- pure function
 //state- current state, action: to give a new state
@@ -25,3 +26,4 @@ export const Reducer = (state = initialState, action) =>{
     return state; // just returning the current state as we have not implemented
     // any action yet
 };
+*/ 
