@@ -15,6 +15,8 @@ import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 //withRouter -- to connect react component to redux
 import {connect} from 'react-redux';
+import {addComment} from '../redux/ActionCreators';
+// we need this to obtain action to dispatch to store
 
 
 const mapStateToProps = (state)=>{
@@ -28,6 +30,11 @@ const mapStateToProps = (state)=>{
 } 
 // now we'' connect Main component to the redux store. At the bottom
 
+const mapDispatchToProps = (dispatch)=>({
+  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+  // ^ dispatching the action ... addComment -action creator- will return an action object to add a comment
+  //dispatch function obtains that action object as the parameter
+});
 
 
 class Main extends Component {
@@ -62,8 +69,8 @@ class Main extends Component {
       return(
         <DishDetail 
         dish = {this.props.dishes.filter((dish)=>dish.id === parseInt(match.params.dishId, 10))[0]} 
-        
         comments = {this.props.comments.filter((comment)=>comment.dishId === parseInt(match.params.dishId, 10))}
+        addComment={this.props.addComment} // addComment passed as an attribute to DishDetailComponent. then it can be used to dispatch the action to the store
         />)
     }
 
@@ -99,4 +106,5 @@ class Main extends Component {
 }
 
 //export default Main; 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
+// now addCommment function is available in MainComponent, and can be used
