@@ -25,10 +25,11 @@ import { baseUrl } from '../shared/baseUrl';
                 </div> );
         }
         else if(dish.dish!=null){
+            
             return(
                 <div className='col-12 col-md-5 m-1'>
                     <Card>
-                        <CardImg width="100%"  object src = {baseUrl+dish.image} alt = {dish.name}/>                  
+                        <CardImg width="100%"  object src = {baseUrl+dish.dish.image} alt = {dish.name}/>                  
                         <CardBody>
                         <CardTitle heading>{dish.name}</CardTitle>
                         <CardText>{dish.description}</CardText>
@@ -39,7 +40,7 @@ import { baseUrl } from '../shared/baseUrl';
         }
     }
 
-    function RenderComments({comments, addComment, dishId}){
+    function RenderComments({comments, postComment, dishId}){
         if(comments==null)
             return (<div></div>);
         
@@ -63,7 +64,7 @@ import { baseUrl } from '../shared/baseUrl';
                     <ul className='list-unstyled'>
                         {commentdata} 
                     </ul>
-                    <CommentForm dishId = {dishId} addComment = {addComment} />
+                    <CommentForm dishId = {dishId} postComment = {postComment} />
                 </div>
             );
         }
@@ -100,7 +101,7 @@ import { baseUrl } from '../shared/baseUrl';
                     <div className='row'>
                         < RenderDishCard dish = {props.dish} />   
                         < RenderComments comments = {props.comments}
-                            addComment = {props.addComment}
+                            postComment = {props.postComment}
                             dishId = {props.dish.id}   
                         />
                     </div>

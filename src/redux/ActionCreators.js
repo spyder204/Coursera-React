@@ -2,17 +2,55 @@ import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl'
 
 //func to create an action object which is a JS object
-export const addComment  = (dishId, rating, author, comment)=>({
+export const addComment  = (comment)=>({
     //every action object must contain a type
     type: ActionTypes.ADD_COMMENT,
-    payload: {
-        dishId: dishId,
-        rating: rating,
-        author: author,
-        comment: comment,
-    }  
+    payload: comment
 });
 // this ActionType will now be sent to the store
+
+export const postComment = (dishId, rating, author, comment)=>(dispatch)=> {
+//thunk    
+    const newComment = {
+        dishId:dishId,
+        rating:rating,
+        author:author,
+        comment:comment,
+        date:new Date().toISOString()
+    }
+
+    //newComment.date = new Date().toISOString();
+    
+    return fetch(baseUrl+'comments', {
+        method:'POST',
+        body:JSON.stringify(newComment),
+        headers:{
+            'Content-type':'application/json'
+        },
+        credentials:'same-origin'
+    })
+    .then(response =>{
+        if(response.ok){
+            return response;// now available to the next then
+        }
+        else{
+            var error = new Error('Error -> '+response.status+':'+response.statusText);
+            error.response = response;
+            throw error;
+        }//abovementioned is how you handle response from a server
+    },
+    error => { // when you don't hear anything from the server / no response from the server
+        var errmess = new Error(error.message)
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(response => dispatch(addComment(response)))
+    .catch(error =>{
+        console.log("error in posting comment- "+ error.message);
+        alert(error.message)
+
+    })
+}    
 export const fetchDishes = () => (dispatch) => {
 
     dispatch(dishesLoading(true));
@@ -80,7 +118,7 @@ export const commentsFailed = (errmess) => ({
     payload: errmess
 });
 
-export const addComments = (comments) => ({
+export const addComments = (comments) => ({ //used by postComments to add comments
     type: ActionTypes.ADD_COMMENTS,
     payload: comments
 });

@@ -19,7 +19,7 @@ class CommentForm extends React.Component{
     }
     submitComment(values){
        console.log(JSON.stringify(values));
-       this.props.addComment(this.props.dishId, values.rating, values.username, values.commentData);
+       this.props.postComment(this.props.dishId, values.rating, values.username, values.commentData);
 
     }
     toggleModal(event){
