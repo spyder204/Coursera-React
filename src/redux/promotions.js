@@ -1,6 +1,6 @@
 import * as ActionTypes from './ActionTypes';
 
-export const Promotions = (state  = { isLoading: true,
+export const promotionsReducer = (state  = { isLoading: true,
                                         errMess: null,
                                         promotions:[]}, action) => {
     switch (action.type) {

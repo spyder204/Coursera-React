@@ -1,6 +1,7 @@
 import React from 'react';
 import {Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle} from 'reactstrap';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 function RenderCard({item, isLoading, errMess}){ // will receive props here- item, destructured
     
@@ -19,7 +20,7 @@ function RenderCard({item, isLoading, errMess}){ // will receive props here- ite
 
         return( // we are using the same Card structure to render leader, dishes, promotions
             <Card>
-                <CardImg src = {item.image} alt = {item.name} />
+                <CardImg src = {baseUrl+item.image} alt = {item.name} />
             <CardBody>
             <CardTitle className='card-title'>{item.name}</CardTitle>
                 { item.designation ? <CardSubtitle className="card-subtitle">{item.designation}</CardSubtitle>:null }
@@ -52,7 +53,7 @@ function Home(props){
                  </div>
                  
                  <div className="column-12 col-md m-1">
-                     <RenderCard item = {props.promotion} />
+                     <RenderCard item = {props.promotion}  isLoading={props.promoLoading} errMess={props.promoErrMess}/>
                  </div>
             </div>
         </div>
