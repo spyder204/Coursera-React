@@ -2,11 +2,27 @@ import React from 'react';
 import {Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import CommentForm from './CommentForm';
+import { Loading } from './LoadingComponent';
 
-    function RenderDishCard({dish}){  // dish = props here . destructured
-        if(dish==null)
-            return(<div></div>);
-        else{
+    function RenderDishCard(dish){  // dish = props here . destructured
+        if (dish.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (dish.errMess) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <h4>{dish.errMess}</h4>
+                    </div>
+                </div> );
+        }
+        else if(dish.dish!=null){
             return(
                 <div className='col-12 col-md-5 m-1'>
                     <Card>

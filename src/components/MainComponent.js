@@ -15,7 +15,7 @@ import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 //withRouter -- to connect react component to redux
 import {connect} from 'react-redux';
-import {addComment} from '../redux/ActionCreators';
+import { addComment, fetchDishes } from '../redux/ActionCreators';
 // we need this to obtain action to dispatch to store
 
 
@@ -31,9 +31,10 @@ const mapStateToProps = (state)=>{
 // now we'' connect Main component to the redux store. At the bottom
 
 const mapDispatchToProps = (dispatch)=>({
-  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
   // ^ dispatching the action ... addComment -action creator- will return an action object to add a comment
   //dispatch function obtains that action object as the parameter
+  fetchDishes: () => { dispatch(fetchDishes())}
 });
 
 
@@ -49,15 +50,22 @@ class Main extends Component {
     */
   }
 
+  componentDidMount() {
+    this.props.fetchDishes();
+  }
+  
+
   render() {
     
     const Homepage = ()=>{
       return(
-        <Home  dish = {this.props.dishes.filter((dish)=>dish.featured)[0]}
-        promotion = {this.props.promotions.filter((promo)=>promo.featured)[0]}
-        leader = {this.props.leaders.filter((leader)=>leader.featured)[0]}
-        
-        />// filter will return an array
+        <Home 
+              dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
+              dishesLoading={this.props.dishes.isLoading}
+              dishesErrMess={this.props.dishes.errMess}
+              promotion={this.props.promotions.filter((promo) => promo.featured)[0]}
+              leader={this.props.leaders.filter((leader) => leader.featured)[0]}
+          />// filter will return an array
         // now these will be passed as props to the home component, make apt changes there
         );
       
@@ -67,11 +75,12 @@ class Main extends Component {
       console.log(parseInt(match.params.dishId, 10));
       // route will pass 3 props here-match, location, history,. we want match only
       return(
-        <DishDetail 
-        dish = {this.props.dishes.filter((dish)=>dish.id === parseInt(match.params.dishId, 10))[0]} 
-        comments = {this.props.comments.filter((comment)=>comment.dishId === parseInt(match.params.dishId, 10))}
-        addComment={this.props.addComment} // addComment passed as an attribute to DishDetailComponent. then it can be used to dispatch the action to the store
-        />)
+        <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]}
+            isLoading={this.props.dishes.isLoading}
+            errMess={this.props.dishes.errMess}
+            comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
+            addComment={this.props.addComment}
+          />)
     }
 
     return (
