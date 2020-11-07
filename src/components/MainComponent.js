@@ -17,7 +17,7 @@ import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 import {connect} from 'react-redux';
 import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
 // we need this to obtain action to dispatch to store
-
+import {TransitionGroup, CSSTransition} from 'react-transition-group'
 
 const mapStateToProps = (state)=>{
   //map redux store state into props that will become available to the components
@@ -93,30 +93,33 @@ class Main extends Component {
     }
 
     return (
-      <div>
+      <div> 
         <Header/>
-          <Switch>
-            
-            <Route path = "/home" component= {Homepage} />
-            <Route exact path = "/menu" component = { ()=><Menu dishes = {this.props.dishes} /> } />
-            {
-            // exact-- means path should exactly match, nothing ahead /menu
-            //component= {Menu}--- wrong approach---- as we would not be able to pass
-            // props to the MenuComponent.
-            // so we make a Function component Menu and we are able to pass the props.
+          <TransitionGroup> 
+            {//wherever you want to apply animation, put that within TransitionGroup
             }
-
-            <Route exact path = "/contactus" component = {Contact} />
-
-            <Route path = '/menu/:dishId' component={DishWithId}/>
-
-            <Route exact path = "/aboutus" component = { ()=><About leaders = {this.props.leaders}/>} /> 
-            <Redirect to = "/home" />
-            {
-              // if routes don't match, redirected to HomePage
-            }
-          
-          </Switch>
+              <CSSTransition key = {this.props.location.key} classNames='page' timeout={300}>
+                <Switch location={this.props.location} >
+                  
+                  <Route path = "/home" component= {Homepage} />
+                  <Route exact path = "/menu" component = { ()=><Menu dishes = {this.props.dishes} /> } />
+                  {
+                  // exact-- means path should exactly match, nothing ahead /menu
+                  //component= {Menu}--- wrong approach---- as we would not be able to pass
+                  // props to the MenuComponent.
+                  // so we make a Function component Menu and we are able to pass the props.
+                  }
+                  <Route exact path = "/contactus" component = {Contact} />
+                  <Route path = '/menu/:dishId' component={DishWithId}/>
+                  <Route exact path = "/aboutus" component = { ()=><About leaders = {this.props.leaders}/>} /> 
+                  <Redirect to = "/home" />
+                  {
+                    // if routes don't match, redirected to HomePage
+                  }
+                
+                </Switch>
+              </CSSTransition>
+            </TransitionGroup>
         <Footer/>
       </div>
     );

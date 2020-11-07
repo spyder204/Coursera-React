@@ -15,9 +15,9 @@ export const ConfigureStore = ()=>{
             promotions: promotionsReducer,
             leaders: leadersReducer
         }),
-        applyMiddleware(thunk,logger)// composing the global state
+        applyMiddleware(thunk, logger)// composing the global state
     );
-    return store;
+    return store; 
 }
 
 

@@ -103,3 +103,30 @@ background-color: ghostwhite;
 .leader-section{
     margin-top: 18px;
 }
+
+
+/* for react transition*/
+.page-enter{
+    opacity: 0.01;
+    transform: translateX(-100%);
+
+}
+
+.page-enter-active{
+    opacity: 1;
+    transform: translateX(0%);
+    transition: all 400ms ease-in;
+    
+}
+
+.page-exit{
+    opacity: 1;
+    transform:translateX(0%);
+}
+.page-exit-active{
+    opacity: 0.01;
+    transform: translateX(10%);
+    transition: all 400ms ease-out;
+}
+
+
