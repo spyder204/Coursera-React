@@ -63,24 +63,24 @@ class Header extends Component{
                   <Nav navbar>
                      <NavItem className = 'gap-nav'>
                          <NavLink classname = 'nav-link' to='/home'>
-                             <span className="fa fa-home fa-lg"></span>
+                             <span className="fa fa-home fa-lg"></span> Home
                          </NavLink>
                      </NavItem>
      
                      <NavItem className = 'gap-nav'>
                          <NavLink classname = 'nav-link' to='/menu'>
-                             <span className="fa fa-list fa-lg"></span>
+                             <span className="fa fa-list fa-lg"></span> Menu
                          </NavLink>
                      </NavItem>
                      <NavItem className = 'gap-nav'>
                          <NavLink classname = 'nav-link px-12' to='/contactus'>
-                             <span className="fa fa-address-card fa-lg"></span>
+                             <span className="fa fa-address-card fa-lg"></span> Contact
                          </NavLink>
                      </NavItem>
      
                      <NavItem className = 'gap-nav'>
                          <NavLink classname = 'nav-link' to='/aboutus'>
-                             <span className="fa fa-info fa-lg"></span>
+                             <span className="fa fa-info fa-lg"></span> About
                          </NavLink>
                      </NavItem>
                   </Nav>

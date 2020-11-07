@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import CommentForm from './CommentForm';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
-
+import {FadeTransform, Fade, Stagger} from 'react-animation-components'
 
     function RenderDishCard(dish){  // dish = props here . destructured
         if (dish.isLoading) {
@@ -28,13 +28,19 @@ import { baseUrl } from '../shared/baseUrl';
             
             return(
                 <div className='col-12 col-md-5 m-1'>
-                    <Card>
-                        <CardImg width="100%"  object src = {baseUrl+dish.dish.image} alt = {dish.name}/>                  
-                        <CardBody>
-                        <CardTitle heading>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>     
-            </Card>
+                    <FadeTransform in 
+                        transformProps = {{
+                        exitTransform:'scale(0.5) translatey(-50%)'
+                        }}> 
+                        <Card>
+                            <CardImg width="100%"  object src = {baseUrl+dish.dish.image} alt = {dish.name}/>                  
+                            <CardBody>
+                                <CardTitle heading>{dish.name}</CardTitle>
+                                <CardText>{dish.description}</CardText>
+                            </CardBody>     
+                        </Card>
+                    </FadeTransform>        
+
                 </div>
             );
         }
@@ -47,13 +53,15 @@ import { baseUrl } from '../shared/baseUrl';
         else{
              let commentdata = comments.map((comments)=>{
                 return(
-                    <li key = {comments.id}>
+                   <Fade in>
+                        <li key = {comments.id}>
                         <div>
                             <p className='comments'>{comments.comment}</p>
                             <p className='commentAuthor'>--{comments.author},
                             {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comments.date)))}</p>
                         </div>
                     </li>
+                   </Fade>
                 )
              })
                          
@@ -62,7 +70,9 @@ import { baseUrl } from '../shared/baseUrl';
                 <div className=' col-12 col-md-5 m-1'>
                     <h4 className='commentsHeading'>Comments</h4>
                     <ul className='list-unstyled'>
+                    <Stagger in>   
                         {commentdata} 
+                    </Stagger>
                     </ul>
                     <CommentForm dishId = {dishId} postComment = {postComment} />
                 </div>
