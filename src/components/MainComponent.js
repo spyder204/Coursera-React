@@ -15,7 +15,7 @@ import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 //withRouter -- to connect react component to redux
 import {connect} from 'react-redux';
-import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
+import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 // we need this to obtain action to dispatch to store
 import {TransitionGroup, CSSTransition} from 'react-transition-group'
 
@@ -37,6 +37,7 @@ const mapDispatchToProps = (dispatch)=>({
   fetchDishes: () => { dispatch(fetchDishes())},
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders:()=>dispatch(fetchLeaders())
 });
 
 
@@ -56,6 +57,7 @@ class Main extends Component {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
+    this.props.fetchLeaders();
   }
 
   render() {
@@ -71,7 +73,9 @@ class Main extends Component {
               promoLoading={this.props.promotions.isLoading}
               promoErrMess={this.props.promotions.errMess}
 
-              leader={this.props.leaders.filter((leader) => leader.featured)[0]}
+              leader={this.props.leaders.leaders.filter((leader) => leader.featured)[0]}
+              leadersLoading={this.props.leaders.isLoading}
+              leadersErrMess ={this.props.leaders.errMess}
           />// filter will return an array
         // now these will be passed as props to the home component, make apt changes there
         );

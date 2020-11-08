@@ -1,37 +1,48 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader,CardSubtitle, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import {baseUrl} from '../shared/baseUrl';
+import { Loading } from './LoadingComponent';
 
-
-function RenderLeader({leader}){
-    console.log(leader)
-    return(
-        <div className='row leaderMedia'>
-            <Media>
-            <Media object style ={{maxHeight:'200px', marginRight:'20px', borderRadius:'50%', boxShadow:'-5px 5px 5px coral'}} 
-            src={leader.image} alt="Masterchef Alberto" />
-            </Media>
-            
-            <Media body>
-                <Media heading>
-                    {leader.name}
+function RenderLeader({leader, isLoading, errMess}){
+    //console.log('render '+JSON.stringify({leader, isLoading, errMess}, null ,2))
+   // console.log('AM I EVER TRUE '+isLoading)
+    if(isLoading){
+        return(
+            <Loading/>
+        )       
+    }
+    else if(errMess){
+        return(<h4>errMess</h4>)
+    }
+    else {
+        return(
+            <div className='row leaderMedia'>
+                <Media>
+                <Media object style ={{maxHeight:'200px', marginRight:'20px', borderRadius:'50%', boxShadow:'-5px 5px 5px coral'}} 
+                src={baseUrl+leader.image} alt="Masterchef Alberto" />
                 </Media>
-                <CardSubtitle>{leader.designation}</CardSubtitle>
-                <div>{leader.description}</div>
-            </Media>
-        </div>
-    )
-
+                
+                <Media body>
+                    <Media heading>
+                        {leader.name}
+                    </Media>
+                    <CardSubtitle>{leader.designation}</CardSubtitle>
+                    <div>{leader.description}</div>
+                </Media>
+         </div>
+        )
+    }       
 }
 
 
 
 
 function About(props) {
-   
-    const leaders = props.leaders.map((leader) => {
+ //  console.log('props>'+JSON.stringify(props,null, 2))
+    const leaders = props.leaders.leaders.map((leader) => {
         return (
-            <RenderLeader leader = {leader} />
+            <RenderLeader leader ={leader} />
         );
     });
 
