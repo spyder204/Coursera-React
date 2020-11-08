@@ -15,7 +15,7 @@ import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 //withRouter -- to connect react component to redux
 import {connect} from 'react-redux';
-import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders,postFeedback } from '../redux/ActionCreators';
 // we need this to obtain action to dispatch to store
 import {TransitionGroup, CSSTransition} from 'react-transition-group'
 
@@ -34,10 +34,12 @@ const mapDispatchToProps = (dispatch)=>({
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
   // ^ dispatching the action ... addComment -action creator- will return an action object to add a comment
   //dispatch function obtains that action object as the parameter
-  fetchDishes: () => { dispatch(fetchDishes())},
+  fetchDishes: () => dispatch(fetchDishes()),
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos()),
-  fetchLeaders:()=>dispatch(fetchLeaders())
+  fetchLeaders:()=>dispatch(fetchLeaders()),
+  postFeedback: (firstname, lastname, phone, email, message, agree, contactType ) => 
+    dispatch(postFeedback(firstname, lastname, phone, email, message, agree, contactType)),
 });
 
 
@@ -113,7 +115,7 @@ class Main extends Component {
                   // props to the MenuComponent.
                   // so we make a Function component Menu and we are able to pass the props.
                   }
-                  <Route exact path = "/contactus" component = {Contact} />
+                  <Route exact path = "/contactus" component = {()=> <Contact postFeedback={this.props.postFeedback}/>} />
                   <Route path = '/menu/:dishId' component={DishWithId}/>
                   <Route exact path = "/aboutus" component = { ()=><About leaders = {this.props.leaders}/>} /> 
                   <Redirect to = "/home" />

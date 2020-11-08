@@ -3,46 +3,42 @@ import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader,CardSubtitle, Me
 import { Link } from 'react-router-dom';
 import {baseUrl} from '../shared/baseUrl';
 import { Loading } from './LoadingComponent';
+import {FadeTransform, Fade, Stagger} from 'react-animation-components'
 
-function RenderLeader({leader, isLoading, errMess}){
-    //console.log('render '+JSON.stringify({leader, isLoading, errMess}, null ,2))
-   // console.log('AM I EVER TRUE '+isLoading)
-    if(isLoading){
-        return(
-            <Loading/>
-        )       
+function RenderLeader({leader}){
+
+    return(
+        <div className='row leaderMedia'>
+            <Media>
+            <Media object style ={{maxHeight:'200px', marginRight:'20px', borderRadius:'50%', boxShadow:'-5px 5px 5px coral'}} 
+            src={baseUrl+leader.image} alt="Masterchef Alberto" />
+            </Media>
+                
+            <Media body>
+                <Media heading>
+                    {leader.name}
+            </Media>
+            <CardSubtitle>{leader.designation}</CardSubtitle>
+                <div>{leader.description}</div>
+            </Media>
+         </div>
+    )
+}       
+
+function About(props) {
+   console.log('props>'+JSON.stringify(props,null, 2))
+    if(props.leaders.isLoading){
+        return(<Loading/>)       
     }
-    else if(errMess){
+    else if(props.leaders.errMess){
         return(<h4>errMess</h4>)
     }
     else {
-        return(
-            <div className='row leaderMedia'>
-                <Media>
-                <Media object style ={{maxHeight:'200px', marginRight:'20px', borderRadius:'50%', boxShadow:'-5px 5px 5px coral'}} 
-                src={baseUrl+leader.image} alt="Masterchef Alberto" />
-                </Media>
-                
-                <Media body>
-                    <Media heading>
-                        {leader.name}
-                    </Media>
-                    <CardSubtitle>{leader.designation}</CardSubtitle>
-                    <div>{leader.description}</div>
-                </Media>
-         </div>
-        )
-    }       
-}
-
-
-
-
-function About(props) {
- //  console.log('props>'+JSON.stringify(props,null, 2))
-    const leaders = props.leaders.leaders.map((leader) => {
+        const leaders = props.leaders.leaders.map((leader) => {
         return (
-            <RenderLeader leader ={leader} />
+           <Stagger in>
+                <RenderLeader leader ={leader}/>
+            </Stagger>
         );
     });
 
@@ -102,13 +98,18 @@ function About(props) {
                     <h2>Corporate Leadership</h2>
                 </div>
                 <div className="col-12">
-                    <Media list>
+                    <Stagger in>
+                        <Fade in>
+                        <Media list>
                         {leaders}
                     </Media>
+                        </Fade>
+                    </Stagger>
                 </div>
             </div>
         </div>
     );
+}
 }
 
 export default About;   

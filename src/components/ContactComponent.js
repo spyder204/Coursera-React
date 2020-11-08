@@ -2,7 +2,7 @@ import React from 'react';
 import {Breadcrumb, BreadcrumbItem, Button, Label, Input, Col, Row} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import {Control, LocalForm, Errors} from 'react-redux-form'; //manages state
-
+import {postFeedback} from '../redux/ActionCreators'
 
 // for forms === we need a class component as we need to store the state of the form in our contact component
 
@@ -32,8 +32,8 @@ class Contact extends React.Component{
         //alert('Current State is: ' + JSON.stringify(this.state));
         //event.preventDefault(); // to prevent the default behavior if the event is not handled
         
-        console.log("Current state is ", JSON.stringify( values));
-        alert('Current State is: ' + JSON.stringify(values));
+        //console.log("Current state is ", JSON.stringify( values));
+        this.props.postFeedback(values.firstname, values.lastname, values.phone, values.email, values.agree, values.contactType,  values.message)
         
     }
 
@@ -117,7 +117,7 @@ class Contact extends React.Component{
                             <Row className="form-group">
                                 <Label htmlFor="lastName" md={2}>Last Name</Label>
                                 <Col md={10}>
-                                    <Control.text model=".lastn-fame" id="lastName" name="lastName"
+                                    <Control.text model=".lastname" id="lastName" name="lastName"
                                         placeholder="Last Name"
                                         className="form-control"
                                         validators = {{

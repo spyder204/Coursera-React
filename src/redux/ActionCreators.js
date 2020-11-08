@@ -163,7 +163,9 @@ export const addPromos = (promos) => ({
     payload: promos
 });
 
-//--------leaders 
+
+
+//--------leaders-----------------
 export const leadersLoading = () =>({
     type:ActionTypes.LEADERS_LOADING
 });
@@ -178,7 +180,7 @@ export const addLeaders = (leaders) =>({
 
 export const fetchLeaders = () => (dispatch) =>{
     
-    dispatch(leadersLoading());
+    dispatch(leadersLoading(true));
     
     return fetch(baseUrl+'leaders')
     .then(response=>{
@@ -198,4 +200,50 @@ export const fetchLeaders = () => (dispatch) =>{
         dispatch(leadersFailed(error))})    
 }
 
+// posting  feedback
 
+export const postFeedback = (fName, lName, phone, email, agree, contactType, message) => ()=>{
+    const feedback = {
+        fName:fName,
+        lName:lName,
+        phone:phone,
+        email:email,
+        contactType:contactType,
+        agree:agree,
+        message:message,
+        date: new Date().toISOString()
+    }
+    console.log("Feedback "+JSON.stringify(feedback, null, 2));
+    return fetch(baseUrl+'feedback', {
+        method:'POST', 
+        body:JSON.stringify(feedback),
+        headers:{
+            'Content-type':'application/json'
+        },
+        credentials:'same-origin'
+     })
+     .then(response =>{
+        if(response.ok){
+            console.log("Response "+JSON.stringify(response, null, 2));
+            return response
+        }
+        else{
+            var error = new Error('Error -> '+response.status+':'+response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        var errmess = new Error(error.message)
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(response => {
+        alert("SUCCESS\n"+JSON.stringify(response, null,2));
+        return response;
+    })
+    .catch(error =>{
+        console.log("error in submitting feedback- "+ error.message);
+        alert(error.message)
+    })
+};
